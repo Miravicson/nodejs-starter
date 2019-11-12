@@ -36,6 +36,7 @@
     "@babel/preset-env": "^7.7.1",
     "@babel/preset-flow": "^7.0.0",
     "babel-eslint": "^9.0.0",
+    "chai": "^4.2.0",
     "eslint": "^5.16.0",
     "eslint-config-airbnb": "^17.1.1",
     "eslint-config-prettier": "^4.3.0",
@@ -47,6 +48,7 @@
     "eslint-plugin-react": "^7.16.0",
     "eslint-plugin-react-hooks": "^1.7.0",
     "flow-bin": "^0.111.3",
+    "mocha": "^6.2.2",
     "nodemon": "^1.19.4",
     "prettier": "^1.18.2"
   },
