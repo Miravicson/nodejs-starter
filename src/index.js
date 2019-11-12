@@ -3,7 +3,7 @@
 import express from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
-import type { $Request, $Response, NextFunction, Middleware, $Application } from 'express';
+import type { $Request, $Response, NextFunction, $Application } from 'express';
 import logger from './utils/logger';
 import config from './config';
 import * as routes from './modules';
@@ -32,22 +32,17 @@ const errorHandlerDecorator = (app: $Application<$Request, $Response>) => {
   app.use('/', (req: $Request, res: $Response, next: NextFunction) => {
     const error: any = new Error('Not found');
     error.message = 'Invalid route or Invalid Method For the Route';
-    logger.error(`${req.method}: ${req.path}:=>  ${error.message}`);
     error.status = 404;
+    logger.error(`${req.method}: ${req.path}:=>  ${error.message}`);
     next(error);
   });
-
-  app.get('/', (error: any, req: $Request, res: $Request, next: NextFunction) => {
+  app.use('/', (error: any, req: $Request, res: $Request, next: NextFunction) => {
     res.status(error.status || 500);
-    res.json({
-      method: req.method,
-      path: req.path,
-      success: false,
+    return res.json({
       error: {
         message: error.message,
       },
     });
-    next();
   });
 
   return app;
@@ -55,7 +50,7 @@ const errorHandlerDecorator = (app: $Application<$Request, $Response>) => {
 
 const routesDecorator = app => {
   app.use('/hello', routes.feature1Routes);
-  app.use('/', (req, res) => {
+  app.get('/', (req, res) => {
     res.send('Hello world!!');
   });
   return app;
